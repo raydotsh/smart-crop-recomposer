@@ -1,6 +1,8 @@
 const express = require("express");
 const multer = require("multer");
-const sharp = require("sharp");
+const { loadSharp } = require("../services/sharp-loader");
+
+const sharp = loadSharp();
 
 const { detectSubject } = require("../services/detection");
 const { calculateCrop } = require("../services/composition");

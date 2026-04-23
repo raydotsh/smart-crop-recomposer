@@ -1,5 +1,8 @@
-const tf = require("@tensorflow/tfjs-node");
+const tf = require("@tensorflow/tfjs");
 const cocoSsd = require("@tensorflow-models/coco-ssd");
+const { loadSharp } = require("./sharp-loader");
+
+const sharp = loadSharp();
 
 let modelPromise = null;
 
@@ -47,7 +50,11 @@ function normalizeBox(bbox, imageWidth, imageHeight) {
 async function detectSubject(imageBuffer) {
   try {
     const model = await getModel();
-    const tensor = tf.node.decodeImage(imageBuffer, 3);
+    const { data, info } = await sharp(imageBuffer)
+      .removeAlpha()
+      .raw()
+      .toBuffer({ resolveWithObject: true });
+    const tensor = tf.tensor3d(new Uint8Array(data), [info.height, info.width, 3]);
 
     try {
       const predictions = await model.detect(tensor);

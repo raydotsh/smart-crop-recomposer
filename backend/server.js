@@ -17,6 +17,18 @@ app.use(
 );
 app.use(express.json({ limit: "1mb" }));
 
+app.get("/", (_request, response) => {
+  response.json({
+    ok: true,
+    service: "smart-crop-recomposer-backend",
+    message: "Backend is running.",
+    endpoints: {
+      health: "/health",
+      recompose: "/recompose"
+    }
+  });
+});
+
 app.get("/health", (_request, response) => {
   response.json({ ok: true, service: "smart-crop-recomposer-backend" });
 });

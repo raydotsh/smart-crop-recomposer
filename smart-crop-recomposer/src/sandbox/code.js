@@ -27,6 +27,40 @@ function start() {
         },
 
         /**
+         * Export the current selected visual node as a bitmap blob.
+         * This is more reliable than relying on iframe-side node proxies for canvas selections.
+         */
+        async exportSelectedImage() {
+            try {
+                if (!editor.context.hasSelection) {
+                    return { success: false, error: "No node is selected." };
+                }
+
+                const selectedNode = editor.context.selection[0];
+                if (!selectedNode || typeof selectedNode.createRendition !== "function") {
+                    return {
+                        success: false,
+                        error: "The selected item cannot be exported from the document sandbox."
+                    };
+                }
+
+                const rendition = await selectedNode.createRendition({ format: "png", scale: 1 });
+                if (!rendition?.blob) {
+                    return { success: false, error: "Adobe Express returned an empty rendition." };
+                }
+
+                return {
+                    success: true,
+                    blob: rendition.blob,
+                    nodeType: selectedNode.type || "unknown"
+                };
+            } catch (err) {
+                console.error("[Sandbox] exportSelectedImage error:", err);
+                return { success: false, error: err.message || "Failed to export the selected image." };
+            }
+        },
+
+        /**
          * Replace the currently selected MediaContainerNode with a new image.
          * @param {Blob} imageBlob - The processed image blob from the backend.
          */

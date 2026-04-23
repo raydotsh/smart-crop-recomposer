@@ -125,6 +125,27 @@ async function exportNodeImage(node) {
     throw new Error("This Express environment did not expose the selected image for export.");
 }
 
+async function exportCanvasSelection(selectionNode, sandboxProxy) {
+    if (selectionNode) {
+        try {
+            return await exportNodeImage(selectionNode);
+        } catch (error) {
+            console.warn("Direct node export failed, falling back to document sandbox export.", error);
+        }
+    }
+
+    if (typeof sandboxProxy?.exportSelectedImage === "function") {
+        const result = await sandboxProxy.exportSelectedImage();
+        if (result?.success && result?.blob instanceof Blob) {
+            return result.blob;
+        }
+
+        throw new Error(result?.error || "Could not export the selected image from Adobe Express.");
+    }
+
+    throw new Error("This Express environment did not expose the selected image for export.");
+}
+
 async function replaceNodeImage(node, blob, addOnUISdk, sandboxProxy) {
     if (typeof node?.replaceImage === "function") {
         await node.replaceImage(blob);
@@ -277,13 +298,13 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
     }, [addOnUISdk, sandboxProxy]);
 
     const createRequestPayload = useCallback(async () => {
-        if (selectionState.isImage && selectionState.node) {
-            const blob = await exportNodeImage(selectionState.node);
+        if (selectionState.isImage) {
+            const blob = await exportCanvasSelection(selectionState.node, sandboxProxy);
             return {
                 blob,
                 sourceLabel: "canvas",
                 node: selectionState.node,
-                fileName: "selected-image.jpg"
+                fileName: "selected-image.png"
             };
         }
 
@@ -297,7 +318,7 @@ const App = ({ addOnUISdk, sandboxProxy }) => {
         }
 
         throw new Error("Select an image on the canvas or upload one before applying a fix.");
-    }, [selectionState, uploadedFile]);
+    }, [sandboxProxy, selectionState, uploadedFile]);
 
     const handleApplyFix = useCallback(async () => {
         setLoading(true);

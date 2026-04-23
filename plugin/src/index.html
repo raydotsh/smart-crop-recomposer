@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Crop Recomposer</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
+
+<body>
+  <main class="panel">
+    <header class="panel__header">
+      <p class="eyebrow">Adobe Express Add-on</p>
+      <h1>Smart Crop Recomposer</h1>
+      <p class="subtitle">Reframe the selected image using composition-aware crops.</p>
+    </header>
+
+    <section class="card">
+      <button id="selectImageButton" class="button button--secondary" type="button">
+        Check Selected Image
+      </button>
+
+      <label class="field">
+        <span class="field__label">Layout Style</span>
+        <select id="layoutSelect" class="select">
+          <option value="centered">Centered</option>
+          <option value="rule-of-thirds">Rule of Thirds</option>
+          <option value="cinematic">Cinematic</option>
+          <option value="text-friendly">Text-Friendly</option>
+          <option value="social-post">Social Post 1:1</option>
+        </select>
+      </label>
+
+      <button id="recomposeButton" class="button" type="button">Recompose</button>
+
+      <div id="loadingIndicator" class="loading hidden" aria-live="polite">
+        <span class="spinner" aria-hidden="true"></span>
+        <span>Processing image...</span>
+      </div>
+
+      <p id="selectionSummary" class="summary">No image checked yet.</p>
+      <p id="statusMessage" class="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script src="./main.js"></script>
+</body>
+
+</html>

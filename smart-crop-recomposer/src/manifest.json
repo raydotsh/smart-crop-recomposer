@@ -1,0 +1,34 @@
+{
+    "testId": "67af1f19-5e39-4a6b-aa36-57dcac71f689",
+    "name": "Smart Crop Recomposer",
+    "version": "1.0.0",
+    "manifestVersion": 2,
+    "requirements": {
+        "apps": [
+            {
+                "name": "Express",
+                "apiVersion": 1
+            }
+        ]
+    },
+    "entryPoints": [
+        {
+            "type": "panel",
+            "id": "panel1",
+            "main": "index.html",
+            "documentSandbox": "code.js"
+        }
+    ],
+    "permissions": {
+        "sandbox": [
+            "allow-popups",
+            "allow-downloads"
+        ],
+        "network": {
+            "domains": [
+                "http://localhost:3000",
+                "https://localhost:3000"
+            ]
+        }
+    }
+}

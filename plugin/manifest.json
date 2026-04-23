@@ -1,0 +1,35 @@
+{
+  "manifestVersion": 2,
+  "id": "com.rehana.smartcroprecomposer",
+  "name": "Smart Crop Recomposer",
+  "version": "1.0.0",
+  "requirements": {
+    "apps": [
+      {
+        "name": "Express",
+        "minVersion": "1.0.0"
+      }
+    ]
+  },
+  "entryPoints": [
+    {
+      "type": "panel",
+      "id": "mainPanel",
+      "label": {
+        "default": "Smart Crop"
+      },
+      "main": "src/index.html"
+    }
+  ],
+  "permissions": {
+    "network": {
+      "domains": [
+        "http://localhost:3000",
+        "https://localhost:3000"
+      ]
+    },
+    "document": {
+      "access": "readAndWrite"
+    }
+  }
+}

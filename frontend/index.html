@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Smart Crop Recomposer</title>
+  <meta name="description" content="AI powered smart cropping with beautiful layouts." />
+  <link rel="stylesheet" href="styles.css" />
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="dark-theme">
+  <div class="background-elements">
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
+  </div>
+
+  <main class="glass-panel">
+    <header>
+      <h1>Smart Crop</h1>
+      <p>Precision AI Framing</p>
+    </header>
+
+    <div class="upload-section" id="dropZone">
+      <input type="file" id="imageInput" accept="image/*" hidden />
+      <div class="upload-content">
+        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none"
+          stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="upload-icon">
+          <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+          <polyline points="17 8 12 3 7 8" />
+          <line x1="12" x2="12" y1="3" y2="15" />
+        </svg>
+        <p>Drop your image or <button class="text-btn" id="browseBtn">browse</button></p>
+      </div>
+      <div id="imagePreviewContainer" class="hidden">
+        <img id="imagePreview" src="" alt="Selected image preview" />
+        <button id="removeImgBtn" class="icon-btn" aria-label="Remove Image">&times;</button>
+      </div>
+    </div>
+
+    <div class="controls">
+      <div class="control-group">
+        <label for="layoutSelect">Layout Style</label>
+        <div class="select-wrapper">
+          <select id="layoutSelect">
+            <option value="centered">Centered</option>
+            <option value="rule-of-thirds">Rule of Thirds</option>
+            <option value="cinematic">Cinematic 16:9</option>
+            <option value="text-friendly">Text-Friendly Space</option>
+            <option value="social-post">Social Post 1:1</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <button id="recomposeBtn" class="primary-btn" disabled>
+      <span class="btn-text">Recompose Image</span>
+      <div class="loader hidden"></div>
+    </button>
+  </main>
+
+  <!-- Modal for Result -->
+  <div id="resultModal" class="modal hidden">
+    <div class="modal-content glass-panel">
+      <button id="closeModalBtn" class="icon-btn close-modal">&times;</button>
+      <h2>Processed Result</h2>
+      <div class="result-img-container">
+        <img id="resultImage" src="" alt="Cropped result" />
+      </div>
+      <button id="downloadBtn" class="primary-btn">Download Image</button>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+
+</html>
